@@ -80,6 +80,7 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
     callback: "&"
     pickerTemplateUrl: "="
     inputTemplateUrl: "="
+    isoweek: "="
 
   link: ($scope, element, attrs) ->
     getTemplate($scope.inputTemplateUrl).then (html) ->
@@ -190,7 +191,10 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
     _prepare = () ->
       $scope.months = []
       startIndex = $scope.range.start.year()*12 + $scope.range.start.month()
-      startDay = moment().startOf("week").day()
+      if $scope.isoweek
+        startDay = moment().startOf("isoweek").day()
+      else
+        startDay = moment().startOf("week").day()
 
       $scope.range.by "days", (date) ->
         d = date.day() - startDay

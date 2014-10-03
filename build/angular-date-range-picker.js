@@ -34,7 +34,8 @@
           pastDates: "@",
           callback: "&",
           pickerTemplateUrl: "=",
-          inputTemplateUrl: "="
+          inputTemplateUrl: "=",
+          isoweek: "="
         },
         link: function($scope, element, attrs) {
           var documentClickFn, _calculateRange, _checkQuickList, _makeQuickList, _prepare;
@@ -149,7 +150,11 @@
             var m, startDay, startIndex, _i, _len, _ref;
             $scope.months = [];
             startIndex = $scope.range.start.year() * 12 + $scope.range.start.month();
-            startDay = moment().startOf("week").day();
+            if ($scope.isoweek) {
+              startDay = moment().startOf("isoweek").day();
+            } else {
+              startDay = moment().startOf("week").day();
+            }
             $scope.range.by("days", function(date) {
               var d, dis, m, sel, w, _base, _base1;
               d = date.day() - startDay;
