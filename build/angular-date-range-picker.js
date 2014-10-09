@@ -35,7 +35,8 @@
           callback: "&",
           pickerTemplateUrl: "=",
           inputTemplateUrl: "=",
-          isoweek: "="
+          isoweek: "=",
+          showPast: "="
         },
         link: function($scope, element, attrs) {
           var documentClickFn, _calculateRange, _checkQuickList, _makeQuickList, _prepare;
@@ -118,7 +119,7 @@
           _calculateRange = function() {
             var end, start;
             if ($scope.showRanged) {
-              return $scope.range = $scope.selection ? (start = $scope.selection.start.clone().startOf("month").startOf("day"), end = start.clone().add(2, "months").endOf("month").startOf("day"), moment().range(start, end)) : moment().range(moment().startOf("month").subtract(1, "month").startOf("day"), moment().endOf("month").add(1, "month").startOf("day"));
+              return $scope.range = $scope.selection ? ($scope.showPast ? (end = $scope.selection.end.clone().endOf("month").startOf("day"), start = end.clone().subtract(2, "months").startOf("month").startOf("day")) : (start = $scope.selection.start.clone().startOf("month").startOf("day"), end = start.clone().add(2, "months").endOf("month").startOf("day")), moment().range(start, end)) : moment().range(moment().startOf("month").subtract(1, "month").startOf("day"), moment().endOf("month").add(1, "month").startOf("day"));
             } else {
               $scope.selection = false;
               $scope.selection = $scope.model || false;
