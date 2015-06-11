@@ -202,6 +202,7 @@
           };
           $scope.show = function() {
             $scope.selection = $scope.model;
+            $scope.selecting = true;
             _calculateRange();
             _prepare();
             return $scope.visible = true;
@@ -213,6 +214,7 @@
               }
             }
             $scope.visible = false;
+            $scope.selecting = true;
             return $scope.start = null;
           };
           $scope.prevent_select = function($event) {
@@ -242,12 +244,13 @@
               return;
             }
             if ($scope.showRanged) {
-              $scope.selecting = !$scope.selecting;
               if ($scope.selecting) {
                 $scope.start = day.date;
+                $scope.selecting = false;
               } else {
                 $scope.selection = moment().range($scope.start, day.date);
                 $scope.start = null;
+                $scope.selecting = true;
               }
             } else {
               $scope.selection = moment(day.date);

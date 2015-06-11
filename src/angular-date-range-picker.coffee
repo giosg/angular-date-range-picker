@@ -237,6 +237,7 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
 
     $scope.show = () ->
       $scope.selection = $scope.model
+      $scope.selecting = true
       _calculateRange()
       _prepare()
       $scope.visible = true
@@ -244,6 +245,7 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
     $scope.hide = ($event) ->
       $event?.stopPropagation?()
       $scope.visible = false
+      $scope.selecting = true
       $scope.start = null
 
     $scope.prevent_select = ($event) ->
@@ -261,16 +263,15 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
       return if day.disabled
 
       if $scope.showRanged
-        $scope.selecting = !$scope.selecting
-
         if $scope.selecting
           $scope.start = day.date
+          $scope.selecting = false
         else
           $scope.selection = moment().range($scope.start, day.date)
           $scope.start = null
+          $scope.selecting = true
       else
         $scope.selection = moment(day.date)
-
       _prepare()
 
     $scope.move = (n, $event) ->
