@@ -36,7 +36,9 @@
           pickerTemplateUrl: "=",
           inputTemplateUrl: "=",
           isoweek: "=",
-          showPast: "="
+          showPast: "=",
+          minDate: "=",
+          maxDate: "="
         },
         link: function($scope, element, attrs) {
           var documentClickFn, _calculateRange, _checkQuickList, _makeQuickList, _prepare;
@@ -177,6 +179,16 @@
                 sel = date.isSame($scope.selection);
                 if ($scope.pastDates) {
                   dis = moment().diff(date, 'days') > 0;
+                }
+              }
+              if ($scope.minDate) {
+                if (!dis) {
+                  dis = date < $scope.minDate;
+                }
+              }
+              if ($scope.maxDate) {
+                if (!dis) {
+                  dis = date > $scope.maxDate;
                 }
               }
               (_base = $scope.months)[m] || (_base[m] = {

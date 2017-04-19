@@ -61,6 +61,20 @@ $scope.rangeSelectOptions = [
 <input type="text" date-range-picker ng-model="dates" custom-select-options="rangeSelectOptions" />
 ```
 
+### Specify min and max selectable dates
+
+You can also specify minimum and maximum selectable dates:
+
+```js
+$scope.mindate = moment().subtract(3, "days");
+$scope.maxdate = moment();
+```
+
+```html
+<date-range-picker ng-model="myModel" ranged="true" min-date="mindate" max-date="maxdate"></date-range-picker>
+```
+
+
 ## Angular version compatibility table
 
 Due to usage of `track by $index` it is impossible to provide one version for both angular `< 1.2` and `>= 1.2`.
