@@ -21,6 +21,9 @@
       };
 
       $scope.date = null
+
+      $scope.mindate = moment().subtract(3, "days");
+      $scope.maxdate = moment().add(3, "days");
     })
     angular.module("testapp").run(function($templateCache){
       $templateCache.put('custom_picker.html', '<div ng-show="visible" class="angular-date-range-picker__picker" ><strong>Greetings from custom picker template</strong></div>');
@@ -42,7 +45,7 @@
       <h1>Date range picker</h1>
       <date-range-picker ng-model="range"></date-range-picker>
       <pre>{{ range.start.toDate() }} - {{ range.end.toDate() }}</pre>
-      <date-range-picker ng-model="range2" ranged="true" callback="fireCallback(range2)"></date-range-picker>
+      <date-range-picker ng-model="range2" ranged="true" callback="fireCallback(range2)" min-date="mindate" max-date="maxdate"></date-range-picker>
       <button ng-click="change()">Change</button>
     </div>
     <div>

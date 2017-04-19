@@ -82,6 +82,8 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
     inputTemplateUrl: "="
     isoweek: "="
     showPast: "="
+    minDate: "="
+    maxDate: "="
 
   link: ($scope, element, attrs) ->
     getTemplate($scope.inputTemplateUrl).then (html) ->
@@ -219,6 +221,17 @@ angular.module("dateRangePicker").directive "dateRangePicker", ["$compile", "$ti
         else
           sel = date.isSame($scope.selection)
           dis = moment().diff(date, 'days') > 0 if $scope.pastDates
+
+        # Check that selected date is between min and
+        # max dates if given. Note that we check them
+        # only if the date is not already disabled
+        # so we dont re-enable date if already disabled.
+        if $scope.minDate
+          if !dis
+            dis = date < $scope.minDate
+        if $scope.maxDate
+          if !dis
+            dis = date > $scope.maxDate
 
         $scope.months[m] ||= {name: date.format("MMMM YYYY"), weeks: []}
         $scope.months[m].weeks[w] ||= []
